@@ -4,6 +4,7 @@ import Myself from '../assets/IMG_0409.jpg'
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { contactlap, maxilap, maxitab, miniimobile, minitab } from '../responvise'
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
     width : 99vw;
@@ -187,7 +188,7 @@ const Aboutme = () => {
                 <Title2>I’m Sahil Raza Ansari</Title2>
                 <Desc1>Hey there, I'm Sahil Raza Ansari, currently a second-year student pursuing BTech in Electronics and Communication Engineering (ECE). Since my early school days, I've been captivated by the world of coding, which ignited a passion for software development alongside my academic pursuits.</Desc1>
                 <Desc2>Despite my main focus on ECE, my curiosity for software development has been unrelenting. I've dedicated considerable time to exploring various programming languages and diving into coding projects that fuels my learning and growth.</Desc2>
-                <ResumeButton>Resume</ResumeButton>
+                <Link to="https://www.canva.com/design/DAF89QrdjN8/y3bcmidticxcS19KXyAELw/view?utm_content=DAF89QrdjN8&utm_campaign=designshare&utm_medium=link&utm_source=editor" target='_blank'><ResumeButton>Resume</ResumeButton></Link>
             </InfoContainer>
         </Wrapper>
     </Container>

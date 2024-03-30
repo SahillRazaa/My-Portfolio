@@ -15,7 +15,6 @@ const Container = styled.div`
 `
 
 const Title = styled.p`
-
   color : white;
   font-size : 6vw;
   font-weight : bold;

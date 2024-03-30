@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { MyProjects, DemoData } from '../Project_data/data';
 import { maxitab, miniimobile, minilap, minitab } from '../responvise';
 import { Link } from 'react-router-dom';
+import RotatingLoader from './Loader';
 
 const Container = styled.div`
     padding : 0% 2%;
@@ -88,6 +89,7 @@ const Demo = styled.div`
     position : fixed;
     top : 20px;
     left :0px;
+    width : 99vw;
     height : 92vh;
     overflow-y: auto;
     display : ${props => props.scrollEnabled ? 'none' : 'flex'};
@@ -115,6 +117,14 @@ const Cross = styled.img`
         background-color : #ffafaf;
         transition : all 0.25s ease-in;
     }
+    ${minitab({
+        left : '45%',
+        right : '0%',
+        margin : '20px',
+    })}
+    ${miniimobile({
+        left : '41%',
+    })}
 `
 const DemoView = styled.div`
     display : flex;
@@ -133,6 +143,7 @@ const WebGIF1 = styled.video`
     border-radius : 30px;
     ${minitab({
         width : '65%',
+        marginTop : '100px',
     })}
     ${miniimobile({
         width : '85%',
@@ -225,30 +236,35 @@ const Logo = styled.img`
     margin: 5px;
 `
 
-
 const Myproject = () => {
 
     const [scrollEnabled, setScrollEnabled] = useState(true);
 
     const [currIndex, setCurrIndex] = useState(0);
-
+    
+    const [viewLoader, setViewLoader] = useState(true);
     useEffect(() => {
         const webGIF1 = document.getElementById('webGIF1');
         const webGIF2 = document.getElementById('webGIF2');
-        if (webGIF1 && webGIF2) {
+        if (webGIF1 && webGIF2 && viewLoader === false) {
             webGIF1.src = DemoData[currIndex].desk;
             webGIF2.src = DemoData[currIndex].mob;
         }
-    }, [currIndex]);
+    }, [currIndex, viewLoader]);
+
 
     const handleScroll = (idx) => {
         setCurrIndex(idx);
+        setTimeout(() => {
+            setViewLoader(false);
+        }, 4000);
         setScrollEnabled(!scrollEnabled);
         document.body.style.overflow = scrollEnabled ? 'hidden' : 'auto';
         document.getElementById('main').style.opacity = scrollEnabled ? '20%' : '100%';
     };
     const handleScrollCross = () => {
         setCurrIndex(0);
+        setViewLoader(true);
         setScrollEnabled(!scrollEnabled);
         document.body.style.overflow = scrollEnabled ? 'hidden' : 'auto';
         document.getElementById('main').style.opacity = scrollEnabled ? '20%' : '100%';
@@ -275,10 +291,11 @@ const Myproject = () => {
     </Container>
     <Demo scrollEnabled = {scrollEnabled}>
         <Cross onClick={() => handleScrollCross()} src='https://i.ibb.co/stJCB4c/icons8-cross-48-1.png'/>
-        <DemoView>
+        {viewLoader === false ? <DemoView>
             <WebGIF1 id="webGIF1" autoPlay loop muted></WebGIF1>
             <WebGIF2 id="webGIF2" autoPlay loop muted></WebGIF2>
-        </DemoView>
+        </DemoView> : ''}
+        {viewLoader === true ? <RotatingLoader/> : ''}
         <CodeLinks>
         <Link to={DemoData[currIndex].frontend_link} target='_blank'><FrontEnd>{'<> Frontend'}</FrontEnd></Link>
             {DemoData[currIndex].backend_link !== "" && <Link to={DemoData[currIndex].backend_link} target='_blank'> <BackEnd>{'<> Backend'}</BackEnd></Link>}
