@@ -31,9 +31,11 @@ export const DemoData = [
     frontend_link: 'https://github.com/SahillRazaa/My-Portfolio',
     backend_link: '',
     techStack: [
+      { tech: 'https://i.ibb.co/TB3zZjN/image.png' },
       { tech: 'https://i.ibb.co/0hXDjTM/image.png' },
       { tech: 'https://i.ibb.co/6rcXkhp/image.png' },
       { tech: 'https://i.ibb.co/4T69Lb2/image.png' },
+
     ],
   },
   {
@@ -44,12 +46,12 @@ export const DemoData = [
     frontend_link: 'https://github.com/SahillRazaa/Sahil_Ecommerce_frontend',
     backend_link: 'https://github.com/SahillRazaa/Sahil_Ecommerce_backend',
     techStack: [
+      { tech: 'https://i.ibb.co/TB3zZjN/image.png' },
       { tech: 'https://i.ibb.co/0hXDjTM/image.png' },
       { tech: 'https://i.ibb.co/6rcXkhp/image.png' },
       { tech: 'https://i.ibb.co/4T69Lb2/image.png' },
       { tech: 'https://i.ibb.co/0KcqYQF/image.png' },
-      { tech: 'https://i.ibb.co/r0nMw6F/image.png' },
-      { tech: 'https://i.ibb.co/xChnmYZ/icons8-java-96.png' },
+      { tech: 'https://i.ibb.co/Pcmxcgf/icons8-mongo-db-96.png' },
     ],
   },
 ];
