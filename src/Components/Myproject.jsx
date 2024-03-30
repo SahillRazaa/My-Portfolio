@@ -5,6 +5,7 @@ import { maxitab, miniimobile, minilap, minitab } from '../responvise';
 import { Link } from 'react-router-dom';
 import RotatingLoader from './Loader';
 
+// Styled components for styling the UI elements
 const Container = styled.div`
     padding : 0% 2%;
     padding-bottom : 3%
@@ -235,14 +236,13 @@ const Logo = styled.img`
     height: auto; 
     margin: 5px;
 `
-
 const Myproject = () => {
-
+    // State management
     const [scrollEnabled, setScrollEnabled] = useState(true);
-
     const [currIndex, setCurrIndex] = useState(0);
-    
     const [viewLoader, setViewLoader] = useState(true);
+    
+    // Effect for updating demo videos
     useEffect(() => {
         const webGIF1 = document.getElementById('webGIF1');
         const webGIF2 = document.getElementById('webGIF2');
@@ -252,7 +252,7 @@ const Myproject = () => {
         }
     }, [currIndex, viewLoader]);
 
-
+    // Event handlers
     const handleScroll = (idx) => {
         setCurrIndex(idx);
         setTimeout(() => {
@@ -270,49 +270,54 @@ const Myproject = () => {
         document.getElementById('main').style.opacity = scrollEnabled ? '20%' : '100%';
     };
 
-  return (
-    <>
-    <Container id='main'>
-        {MyProjects.map((item, idx) => (<>
-        <SerialNo>{item.id}</SerialNo>
-        <Wrapper>
-            <ImageContainer>
-                <Image src={item.image}/>
-            </ImageContainer>
-            <InfoContainer>
-                <Title>{item.title}</Title>
-                <Desc>{item.desc1} {item.desc2} {item.desc3}</Desc>
-                <Buttons>
-                    <Button onClick={() => handleScroll(idx)}>DEMO</Button>
-                </Buttons>
-            </InfoContainer>
-        </Wrapper>
-        </>))}
-    </Container>
-    <Demo scrollEnabled = {scrollEnabled}>
-        <Cross onClick={() => handleScrollCross()} src='https://i.ibb.co/stJCB4c/icons8-cross-48-1.png'/>
-        {viewLoader === false ? <DemoView>
-            <WebGIF1 id="webGIF1" autoPlay loop muted></WebGIF1>
-            <WebGIF2 id="webGIF2" autoPlay loop muted></WebGIF2>
-        </DemoView> : ''}
-        {viewLoader === true ? <RotatingLoader/> : ''}
-        <CodeLinks>
-        <Link to={DemoData[currIndex].frontend_link} target='_blank'><FrontEnd>{'<> Frontend'}</FrontEnd></Link>
-            {DemoData[currIndex].backend_link !== "" && <Link to={DemoData[currIndex].backend_link} target='_blank'> <BackEnd>{'<> Backend'}</BackEnd></Link>}
-        </CodeLinks>
-        <br />
-        <TechStack>
-            <TechTitle>Tech Stacks</TechTitle>
-            <br />
-            <TechLogoContainer>
-                {DemoData[currIndex].techStack.map((item, index) => ( 
-                    <Logo key={index} src={item.tech} />
+    // Rendering project items
+    return (
+        <>
+            <Container id='main'>
+                {MyProjects.map((item, idx) => (
+                    <>
+                        <SerialNo>{item.id}</SerialNo>
+                        <Wrapper>
+                            <ImageContainer>
+                                <Image src={item.image}/>
+                            </ImageContainer>
+                            <InfoContainer>
+                                <Title>{item.title}</Title>
+                                <Desc>{item.desc1} {item.desc2} {item.desc3}</Desc>
+                                <Buttons>
+                                    <Button onClick={() => handleScroll(idx)}>DEMO</Button>
+                                </Buttons>
+                            </InfoContainer>
+                        </Wrapper>
+                    </>
                 ))}
-            </TechLogoContainer>
-        </TechStack>
-    </Demo>
-</>
-  )
+            </Container>
+            <Demo scrollEnabled={scrollEnabled}>
+                <Cross onClick={() => handleScrollCross()} src='https://i.ibb.co/stJCB4c/icons8-cross-48-1.png'/>
+                {viewLoader === false ? (
+                    <DemoView>
+                        <WebGIF1 id="webGIF1" autoPlay loop muted></WebGIF1>
+                        <WebGIF2 id="webGIF2" autoPlay loop muted></WebGIF2>
+                    </DemoView>
+                ) : ''}
+                {viewLoader === true ? <RotatingLoader/> : ''}
+                <CodeLinks>
+                    <Link to={DemoData[currIndex].frontend_link} target='_blank'><FrontEnd>{'<> Frontend'}</FrontEnd></Link>
+                    {DemoData[currIndex].backend_link !== "" && <Link to={DemoData[currIndex].backend_link} target='_blank'> <BackEnd>{'<> Backend'}</BackEnd></Link>}
+                </CodeLinks>
+                <br />
+                <TechStack>
+                    <TechTitle>Tech Stacks</TechTitle>
+                    <br />
+                    <TechLogoContainer>
+                        {DemoData[currIndex].techStack.map((item, index) => ( 
+                            <Logo key={index} src={item.tech} />
+                        ))}
+                    </TechLogoContainer>
+                </TechStack>
+            </Demo>
+        </>
+    );
 }
 
-export default Myproject
+export default Myproject;

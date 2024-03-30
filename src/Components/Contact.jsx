@@ -6,8 +6,9 @@ import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import Alert from './Alert';
 import { Link } from 'react-router-dom';
-import { contactlap, maximobile, miniimobile, minilap } from '../responvise';
+import { contactlap, miniimobile, minilap } from '../responvise';
 
+// Styled components for the Contact component
 const Container = styled.div`
     width : 99vw;
     height : auto;
@@ -286,12 +287,14 @@ const Copyright = styled.p`
         marginLeft : '20px',
     })}
 `
+// Animation variant
 const boxVariant = {
     visible: { opacity: 1, transition: { duration: 1.5 } },
     hidden: { opacity: 0}
-  };
+};
 
 const Contact = () => {
+    // State and refs for form handling and animation control
     const emailInputRef = useRef(null);
     const [email, setEmail] = useState('');
     const [customerName, setCustomerName] = useState('');
@@ -300,6 +303,7 @@ const Contact = () => {
 
     const [alert,setAlert] = useState(null); 
 
+    // Function to show alerts
     const showAlert = (message, text)=>{
         setAlert({
         msg : message,
@@ -310,6 +314,7 @@ const Contact = () => {
         }, 5000);
     }
 
+    // Function to send email
     const sendEmail = () => {
         emailjs
           .send('service_mr6l62n', 'template_ymbqur7', {
@@ -328,7 +333,8 @@ const Contact = () => {
           );
       };
 
-      const validDetails = () => {
+    // Function to validate form details
+    const validDetails = () => {
         if(email === '' || customerName === '' || customerMessage === '' || email.substring(email.length - 4) !== ".com") {
             showAlert("Please fill the form properly.", "ERROR!");
         }
@@ -338,64 +344,71 @@ const Contact = () => {
         }
     };
 
+    // Animation control
     const control = useAnimation();
-  const [ref, inView] = useInView();
+    const [ref, inView] = useInView();
 
-  useEffect(() => {
-    if (inView) {
-      control.start("visible");
-    } else {
-      control.start("hidden");
-    }
-  }, [control, inView]);
+    useEffect(() => {
+        if (inView) {
+            control.start("visible");
+        } else {
+            control.start("hidden");
+        }
+    }, [control, inView]);
 
-
-  return (
-    <Container id='contact'>
-        <Alert alert = {alert}/>
-        <motion.div 
-          variants={boxVariant}
-          initial="hidden"
-          animate={control}
-        >
-        <Title >Let's Connect !</Title>
-        <Wrapper>
-            <Form ref={emailInputRef}>
-                <FormLeft>
-                    <Name placeholder='Your Name' onChange={(e) => setCustomerName(e.target.value)}/>
-                    <Email placeholder='Your Email' onChange={(e) => setEmail(e.target.value)}/>
-                    <Submit ref={ref} onClick={validDetails}>Connect</Submit>
-                </FormLeft>
-                <FormRight>
-                    <Message placeholder='Your Message' onChange={(e) => setCustomerMessage(e.target.value)}/>
-                </FormRight>
-            </Form>
-            <MySocial>
-                <MyLogo>
-                    <Logo src="https://i.ibb.co/Yck1kQ0/graph.png"/>
-                    <MyName>
-                        <UpperName>Sahil Raza</UpperName>
-                        <LowerName>SOFTWARE DEVELOPER</LowerName>
-                    </MyName>
-                </MyLogo>
-                <MyDesc1>🪶 MERN and Mobile App Developer. I create and develop efficient as well as good UI/UX design Apps.</MyDesc1>
-                <MyDesc2>🪶 A college student who is very much interested in learning and exploring Software domain.</MyDesc2>
-                <Social>
-                    <Heading>My Socials :</Heading>
-                    <Icons>
-                        <Link to="https://github.com/SahillRazaa" target='_blank'><Icon1 src="https://i.ibb.co/yBFGJXm/icons8-github-96.png" alt='No Image'/></Link>
-                        <Link to="https://www.linkedin.com/in/sahil-raza-ansari-7b1b98270/" target='_blank'><Icon2 src="https://i.ibb.co/Nsw1ZG4/icons8-linkedin-48.png"/></Link>
-                        <Myemail><b style={{opacity : "100%", fontWeight : "bold"}}>Email :- </b> connectwithsahil007@gmail.com</Myemail>
-                        <MyNumber><b style={{opacity : "100%", fontWeight : "bold"}}>Number :- </b> +91-7992298128</MyNumber>
-                        <Copyright>&copy; 2024 Sahil Raza:
-                         All rights reserved.</Copyright>
-                    </Icons>
-                </Social>
-            </MySocial>
-        </Wrapper>
-        </motion.div>
-    </Container>
-  )
+    return (
+        <Container id='contact'>
+            {/* Alert component */}
+            <Alert alert = {alert}/>
+            <motion.div 
+                variants={boxVariant}
+                initial="hidden"
+                animate={control}
+            >
+                {/* Contact form */}
+                <Title >Let's Connect !</Title>
+                <Wrapper>
+                    <Form ref={emailInputRef}>
+                        <FormLeft>
+                            {/* Name and email input fields */}
+                            <Name placeholder='Your Name' onChange={(e) => setCustomerName(e.target.value)}/>
+                            <Email placeholder='Your Email' onChange={(e) => setEmail(e.target.value)}/>
+                            {/* Submit button */}
+                            <Submit ref={ref} onClick={validDetails}>Connect</Submit>
+                        </FormLeft>
+                        <FormRight>
+                            {/* Message input field */}
+                            <Message placeholder='Your Message' onChange={(e) => setCustomerMessage(e.target.value)}/>
+                        </FormRight>
+                    </Form>
+                    {/* Social media links and contact information */}
+                    <MySocial>
+                        <MyLogo>
+                            <Logo src="https://i.ibb.co/Yck1kQ0/graph.png"/>
+                            <MyName>
+                                <UpperName>Sahil Raza</UpperName>
+                                <LowerName>SOFTWARE DEVELOPER</LowerName>
+                            </MyName>
+                        </MyLogo>
+                        <MyDesc1>🪶 MERN and Mobile App Developer. I create and develop efficient as well as good UI/UX design Apps.</MyDesc1>
+                        <MyDesc2>🪶 A college student who is very much interested in learning and exploring Software domain.</MyDesc2>
+                        {/* Social media icons and contact details */}
+                        <Social>
+                            <Heading>My Socials :</Heading>
+                            <Icons>
+                                <Link to="https://github.com/SahillRazaa" target='_blank'><Icon1 src="https://i.ibb.co/yBFGJXm/icons8-github-96.png" alt='No Image'/></Link>
+                                <Link to="https://www.linkedin.com/in/sahil-raza-ansari-7b1b98270/" target='_blank'><Icon2 src="https://i.ibb.co/Nsw1ZG4/icons8-linkedin-48.png"/></Link>
+                                <Myemail><b style={{opacity : "100%", fontWeight : "bold"}}>Email :- </b> connectwithsahil007@gmail.com</Myemail>
+                                <MyNumber><b style={{opacity : "100%", fontWeight : "bold"}}>Number :- </b> +91-7992298128</MyNumber>
+                                <Copyright>&copy; 2024 Sahil Raza:
+                                All rights reserved.</Copyright>
+                            </Icons>
+                        </Social>
+                    </MySocial>
+                </Wrapper>
+            </motion.div>
+        </Container>
+    )
 }
 
-export default Contact
+export default Contact;

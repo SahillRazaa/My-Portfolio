@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
 import { keyframes, styled } from 'styled-components';
 import RoundedTextCircle from './RoundedTextCircle';
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
@@ -12,22 +12,25 @@ import { maxilap, maximobile, maxitab, miniimobile, minilap, miniminimobile, min
 import Aboutme from './Aboutme';
 import Myproject from './Myproject';
 
+// Styled Components for the HeroSection component
 const Container = styled.div`
-    width : 99vw;
-    height : 100vh;
-    background-color : #f9f9fa;
+    width: 99vw;
+    height: 100vh;
+    background-color: #f9f9fa;
     overflow: hidden;
-`
+`;
+
 const AnimateNavbar = keyframes`
-    from{
-        opacity : 0;
-        transform : translateY(-100%);
+    from {
+        opacity: 0;
+        transform: translateY(-100%);
     }
-    to{
-        opacity : 1;
-        transform : translateY(0);
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
-`
+`;
+
 const Navbar = styled.div`
     display : flex;
     align-items : center;
@@ -530,117 +533,136 @@ const SlideFloat = styled.img`
 
 const HeroSection = () => {
 
+    // State variables for managing visibility and animation
     const [isVisible, setIsVisible] = useState(false);
-
-    const myRef = useRef();
-    useEffect(() => {
-    const observer = new IntersectionObserver((entries)=>{
-        const entry = entries[0];
-        setIsVisible(entry.isIntersecting)
-        setHamState(true);
-        setFloatState(true);
-    })
-    if (myRef.current) {
-        observer.observe(myRef.current);
-    }
-    }, []);
-
     const [isVisible1, setIsVisible1] = useState(false);
-
-    const myRef1 = useRef();
-    useEffect(() => {
-    const observer1 = new IntersectionObserver((entries)=>{
-        const entry = entries[0];
-        setIsVisible1(entry.isIntersecting)
-    })
-    if (myRef1.current) {
-        observer1.observe(myRef1.current);
-    }
-    }, []);
-
     const [hamState, setHamState] = useState(true);
-
     const [floatState, setFloatState] = useState(true);
 
+    // Refs for observing elements
+    const myRef = useRef();
+    const myRef1 = useRef();
 
+    // Effect hooks for observing visibility
+    useEffect(() => {
+        const observer = new IntersectionObserver((entries) => {
+            const entry = entries[0];
+            setIsVisible(entry.isIntersecting);
+            setHamState(true);
+            setFloatState(true);
+        });
+        if (myRef.current) {
+            observer.observe(myRef.current);
+        }
+    }, []);
+
+    useEffect(() => {
+        const observer1 = new IntersectionObserver((entries) => {
+            const entry = entries[0];
+            setIsVisible1(entry.isIntersecting);
+        });
+        if (myRef1.current) {
+            observer1.observe(myRef1.current);
+        }
+    }, []);
+
+    // Handlers for toggling state
     const handleNav = () => {
         setHamState(!hamState);
-    }
+    };
 
     const handleFloat = () => {
         setFloatState(!floatState);
-    }
+    };
 
-  return (
-    <>
-    {!isVisible &&<SlideFloat isVisible = {isVisible} onClick={handleFloat} src={floatState === true ? 'https://i.ibb.co/6nGCTYk/icons8-back-arrow-60.png' : 'https://i.ibb.co/gwK6H92/icons8-back-arrow-60-1.png'} />}
-    {!floatState && !isVisible && <FloatingContainer floatState = {floatState}>
-    <Link style={{textDecoration : "none"}} to="#home" smooth><HamFloat src='https://i.ibb.co/RQGp3qx/icons8-home-60.png'/></Link>
-    <Link style={{textDecoration : "none"}} to="#projectHead" smooth><HamFloat src='https://i.ibb.co/hgzQ3F9/icons8-code-50.png'/></Link>
-    <Link style={{textDecoration : "none"}} to="#about" smooth><HamFloat src='https://i.ibb.co/d6T9y3n/icons8-about-48.png'/></Link>
-    <Link style={{textDecoration : "none"}} to="#contact" smooth><HamFloat src='https://i.ibb.co/crb2R44/icons8-contact-60.png'/></Link>
-    </FloatingContainer>}
-    <Container id='home'>
-      <Navbar ref={myRef}>
-        <LeftNav>
-            <Logo src="https://i.ibb.co/Yck1kQ0/graph.png"/>
-            <Name>
-                <UpperName>Sahil Raza</UpperName>
-                <LowerName>SOFTWARE DEVELOPER</LowerName>
-            </Name>
-        </LeftNav>
-        <RightNav>
-            <Link style={{textDecoration : "none", zIndex : "2"}} to="#home" smooth><Nav>HOME</Nav></Link>
-            <Link style={{textDecoration : "none", zIndex : "2"}}  to="#projectHead" smooth><Nav>PROJECT</Nav></Link>
-            <Link style={{textDecoration : "none", zIndex : "2"}}  to="#about" smooth><Nav>ABOUT</Nav></Link>
-            <Link style={{textDecoration : "none", zIndex : "2"}}  to="#contact" smooth><Nav>CONTACT</Nav></Link>
-        </RightNav>
-        <HamburgerMenu>
-            <HamButton ref={myRef1} hamState = {hamState} onClick={handleNav} src={hamState === true ? 'https://i.ibb.co/x1cxpZJ/icons8-hamburger-menu-50.png' : 'https://i.ibb.co/j8dZmyW/icons8-cross-48.png'}/>
-            {isVisible1 &&<HamNav hamState = {hamState}>
-                <Link style={{textDecoration : "none", zIndex : "2"}} to="#home" smooth><HamNavbar>HOME</HamNavbar></Link>
-                <Link style={{textDecoration : "none", zIndex : "2"}}  to="#projectHead" smooth><HamNavbar>PROJECT</HamNavbar></Link>
-                <Link style={{textDecoration : "none", zIndex : "2"}}  to="#about" smooth><HamNavbar>ABOUT</HamNavbar></Link>
-                <Link style={{textDecoration : "none", zIndex : "2"}}  to="#contact" smooth><HamNavbar>CONTACT</HamNavbar></Link>
-            </HamNav>}
-        </HamburgerMenu>
-      </Navbar>
-      <Intro>
-        <LeftScroll>scroll --{'>'}</LeftScroll>
-        <CenterMain>
-            <InfoContainer>
-                <Info1>Hi, I’m <b style={{textShadow: "-3px -3px 10px black, 3px -3px 10px black, -3px 3px 10px black, 3px 3px 10px black", color : "white"}}>SAHIL RAZA.</b></Info1>
-                <Info2>MERN and Mobile App Developer</Info2>
-                <Info3>I create and develop efficient as well as good UI/UX design Apps</Info3>
-            </InfoContainer>
-            <ImageContainer>
-                <Image src={greet} alt='Sorry!, Image not found'/>
-            </ImageContainer>
-            <RoundedTextCircleContainer>
-                <RoundedTextCircle/>
-            </RoundedTextCircleContainer>
-            <ArrowContainer>
-                <KeyboardDoubleArrowDownIcon sx={{fontSize : 70}} style={{color : "white"}}/>
-            </ArrowContainer>
-        </CenterMain>
-        <RightScroll>scroll --{'>'}</RightScroll>
-        <DoodleImage src="https://i.ibb.co/g76k4hh/Web-capture-7-12-2023-94920-www-figma-com-removebg-preview.png"/>
-      <ExploreContainer>
-        <ExploreText>Let’s Explore </ExploreText>
-        <ExploreImage src="https://i.ibb.co/JHBrM6d/Web-capture-7-12-2023-94721-www-figma-com-removebg-preview.png" />
-      </ExploreContainer>
-      </Intro>
-      <CoverBox1></CoverBox1>
-      <CoverBox2></CoverBox2>
-    </Container>
-    <Quote1 Title={"Coding Is a Poetry Of Logic"} Message={"In my curiosity-filled world, challenges are opportunities, and each experience is a lesson on my lifelong learning path."}/>
-    <MyTechStack />
-    <ProjectHead />
-    <Myproject/>
-    <Aboutme/>
-    <Contact/>
-    </>
-  )
+    return (
+        <>
+            {/* Floating button for navigation */}
+            {!isVisible && <SlideFloat isVisible={isVisible} onClick={handleFloat} src={floatState === true ? 'https://i.ibb.co/6nGCTYk/icons8-back-arrow-60.png' : 'https://i.ibb.co/gwK6H92/icons8-back-arrow-60-1.png'} />}
+            {/* Floating container */}
+            {!floatState && !isVisible && <FloatingContainer floatState={floatState}>
+                <Link style={{ textDecoration: "none" }} to="#home" smooth><HamFloat src='https://i.ibb.co/RQGp3qx/icons8-home-60.png' /></Link>
+                <Link style={{ textDecoration: "none" }} to="#projectHead" smooth><HamFloat src='https://i.ibb.co/hgzQ3F9/icons8-code-50.png' /></Link>
+                <Link style={{ textDecoration: "none" }} to="#about" smooth><HamFloat src='https://i.ibb.co/d6T9y3n/icons8-about-48.png' /></Link>
+                <Link style={{ textDecoration: "none" }} to="#contact" smooth><HamFloat src='https://i.ibb.co/crb2R44/icons8-contact-60.png' /></Link>
+            </FloatingContainer>}
+            {/* Main container */}
+            <Container id='home'>
+                {/* Navbar */}
+                <Navbar ref={myRef}>
+                    {/* Left navigation */}
+                    <LeftNav>
+                        <Logo src="https://i.ibb.co/Yck1kQ0/graph.png" />
+                        <Name>
+                            <UpperName>Sahil Raza</UpperName>
+                            <LowerName>SOFTWARE DEVELOPER</LowerName>
+                        </Name>
+                    </LeftNav>
+                    {/* Right navigation */}
+                    <RightNav>
+                        <Link style={{ textDecoration: "none", zIndex: "2" }} to="#home" smooth><Nav>HOME</Nav></Link>
+                        <Link style={{ textDecoration: "none", zIndex: "2" }} to="#projectHead" smooth><Nav>PROJECT</Nav></Link>
+                        <Link style={{ textDecoration: "none", zIndex: "2" }} to="#about" smooth><Nav>ABOUT</Nav></Link>
+                        <Link style={{ textDecoration: "none", zIndex: "2" }} to="#contact" smooth><Nav>CONTACT</Nav></Link>
+                    </RightNav>
+                    {/* Hamburger menu */}
+                    <HamburgerMenu>
+                        <HamButton ref={myRef1} hamState={hamState} onClick={handleNav} src={hamState === true ? 'https://i.ibb.co/x1cxpZJ/icons8-hamburger-menu-50.png' : 'https://i.ibb.co/j8dZmyW/icons8-cross-48.png'} />
+                        {isVisible1 && <HamNav hamState={hamState}>
+                            <Link style={{ textDecoration: "none", zIndex: "2" }} to="#home" smooth><HamNavbar>HOME</HamNavbar></Link>
+                            <Link style={{ textDecoration: "none", zIndex: "2" }} to="#projectHead" smooth><HamNavbar>PROJECT</HamNavbar></Link>
+                            <Link style={{ textDecoration: "none", zIndex: "2" }} to="#about" smooth><HamNavbar>ABOUT</HamNavbar></Link>
+                            <Link style={{ textDecoration: "none", zIndex: "2" }} to="#contact" smooth><HamNavbar>CONTACT</HamNavbar></Link>
+                        </HamNav>}
+                    </HamburgerMenu>
+                </Navbar>
+                {/* Intro section */}
+                <Intro>
+                    {/* Left scroll button */}
+                    <LeftScroll>scroll --{'>'}</LeftScroll>
+                    <CenterMain>
+                        {/* Info container */}
+                        <InfoContainer>
+                            <Info1>Hi, I’m <b style={{ textShadow: "-3px -3px 10px black, 3px -3px 10px black, -3px 3px 10px black, 3px 3px 10px black", color: "white" }}>SAHIL RAZA.</b></Info1>
+                            <Info2>MERN and Mobile App Developer</Info2>
+                            <Info3>I create and develop efficient as well as good UI/UX design Apps</Info3>
+                        </InfoContainer>
+                        {/* Image container */}
+                        <ImageContainer>
+                            <Image src={greet} alt='Sorry!, Image not found' />
+                        </ImageContainer>
+                        {/* Rounded text circle */}
+                        <RoundedTextCircleContainer>
+                            <RoundedTextCircle />
+                        </RoundedTextCircleContainer>
+                        {/* Arrow container */}
+                        <ArrowContainer>
+                            <KeyboardDoubleArrowDownIcon sx={{ fontSize: 70 }} style={{ color: "white" }} />
+                        </ArrowContainer>
+                    </CenterMain>
+                    {/* Right scroll button */}
+                    <RightScroll>scroll --{'>'}</RightScroll>
+                    {/* Doodle image */}
+                    <DoodleImage src="https://i.ibb.co/g76k4hh/Web-capture-7-12-2023-94920-www-figma-com-removebg-preview.png" />
+                    {/* Explore container */}
+                    <ExploreContainer>
+                        <ExploreText>Let’s Explore </ExploreText>
+                        <ExploreImage src="https://i.ibb.co/JHBrM6d/Web-capture-7-12-2023-94721-www-figma-com-removebg-preview.png" />
+                    </ExploreContainer>
+                </Intro>
+                {/* Cover boxes */}
+                <CoverBox1></CoverBox1>
+                <CoverBox2></CoverBox2>
+            </Container>
+            {/* Additional components */}
+            <Quote1 Title={"Coding Is a Poetry Of Logic"} Message={"In my curiosity-filled world, challenges are opportunities, and each experience is a lesson on my lifelong learning path."} />
+            <MyTechStack />
+            <ProjectHead />
+            <Myproject />
+            <Aboutme />
+            <Contact />
+        </>
+    );
 }
 
-export default HeroSection
+export default HeroSection;

@@ -5,6 +5,7 @@ import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import { maxilap, maxilap1, maximobile, maxitab, miniimobile, minilap, minitab } from '../responvise';
 
+// Styled components for styling the UI elements
 const Container = styled.div`
   width: 99vw;
   height: 100vh;
@@ -19,8 +20,7 @@ const Container = styled.div`
   ${miniimobile({
     height : '70vh',
   })}
-`
-
+`;
 
 const MessageContainer = styled.div`
   display: flex;
@@ -65,7 +65,6 @@ const BracketLeft = styled.img`
     top : '40px',
   })}
 `;
-
 
 const BracketText = styled.p`
   color: white;
@@ -123,24 +122,24 @@ const BracketRight = styled.img`
 `;
 
 const QuoteContainer = styled.div`
-display: flex;
-position: absolute;
-justify-content: center;
-align-items: center;
-top: 0px;
-left: 0px;
-width: 100%;
-opacity: 1;
-padding-top: 40px;
-&:before {
-  content: '';
-  opacity: 0;
-  width: 100%;
-  height: 100%;
+  display: flex;
   position: absolute;
-  top: 0;
-  left: 0;
-}
+  justify-content: center;
+  align-items: center;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  opacity: 1;
+  padding-top: 40px;
+  &:before {
+    content: '';
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 `;
 
 const QuoteMessage = styled.p`
@@ -179,7 +178,6 @@ const QuoteMessage = styled.p`
     width : '60%',
     left : '20%',
   })}
-  
 `;
 
 const Drawing = styled.img`
@@ -220,16 +218,20 @@ const Drawing = styled.img`
   })}
 `;
 
+// Animation variants
 const boxVariant = {
   visible: { opacity: 1,  transition: { duration: 2 } },
   hidden: { opacity: 0}
 };
 
+// Functional component for Quote1
 const Quote1 = ({Title, Message}) => {
-
+  // Animation controls
   const control = useAnimation();
+  // Intersection observer hook to detect when the component comes into view
   const [ref, inView] = useInView();
 
+  // Trigger animation when component comes into view
   useEffect(() => {
     if (inView) {
       control.start("visible");
@@ -239,31 +241,31 @@ const Quote1 = ({Title, Message}) => {
   }, [control, inView]);
 
   return (
-    
-      <Container>
-        <motion.div 
-          variants={boxVariant}
-          initial="hidden"
-          animate={control}
-        >
+    <Container>
+      <motion.div 
+        variants={boxVariant}
+        initial="hidden"
+        animate={control}
+      >
         <MessageContainer>
+          {/* Left bracket */}
           <BracketLeft src="https://i.ibb.co/HP1nZVp/Web-capture-14-12-2023-182238-www-figma-com.jpg" />
+          {/* Text inside brackets */}
           <BracketText>
-          {Message}
+            {Message}
           </BracketText>
+          {/* Right bracket */}
           <BracketRight src="https://i.ibb.co/HP1nZVp/Web-capture-14-12-2023-182238-www-figma-com.jpg" />
         </MessageContainer>
+        {/* Container for quote */}
         <QuoteContainer>
+          {/* Quote message */}
           <QuoteMessage ref={ref}>{Title}</QuoteMessage>
-          {/* <Box1></Box1>
-          <Box2></Box2>
-          <Box3></Box3>
-          <Box4></Box4>
-          <Box5></Box5> */}
+          {/* Drawing */}
+          <Drawing src="https://i.ibb.co/XFfdyJg/Web-capture-14-12-2023-183426-www-figma-com-removebg-preview.png" />
         </QuoteContainer>
-        <Drawing src="https://i.ibb.co/XFfdyJg/Web-capture-14-12-2023-183426-www-figma-com-removebg-preview.png" />
-        </motion.div>
-      </Container>
+      </motion.div>
+    </Container>
   );
 };
 
